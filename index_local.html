@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cube Web</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <link href="local_cdn\google_fonts_1651186215.css" rel="stylesheet">
+    
+    <!-- Tailwind配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        accent: '#722ED1',
+                        light: '#F2F3F5',
+                        dark: '#1D2129',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 4px 20px rgba(0, 0, 0, 0.08)',
+                        'card-hover': '0 8px 30px rgba(0, 0, 0, 0.12)',
+                    }
+                },
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .transition-transform-opacity {
+                transition-property: transform, opacity;
+            }
+            .scale-hover {
+                @apply transition-all duration-300 hover:scale-105;
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1;
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 text-dark min-h-screen flex flex-col">
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="flex-shrink-0 flex items-center">
+                        <i class="fa fa-cube text-primary text-2xl mr-2"></i>
+                        <span class="text-xl font-semibold text-primary">Cube Web</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center">
+                    <span class="text-primary font-bold text-lg">高效学习，智慧成长</span>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary focus:outline-none">
+                        <i class="fa fa-book text-xl"></i>
+                    </button>
+                </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="flex-grow pt-16">
+        <!-- 英雄区域 -->
+        <section class="relative bg-gradient-to-br from-primary/90 to-primary text-white py-20 md:py-32 overflow-hidden">
+            <div class="absolute inset-0 overflow-hidden opacity-10">
+                <div class="absolute -right-10 -top-10 w-64 h-64 bg-white rounded-full"></div>
+                <div class="absolute right-20 top-1/3 w-32 h-32 bg-white rounded-full"></div>
+                <div class="absolute left-1/4 bottom-10 w-40 h-40 bg-white rounded-full"></div>
+                <div class="absolute -left-10 bottom-1/4 w-64 h-64 bg-white rounded-full"></div>
+            </div>
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight mb-6 text-shadow">
+                        每一个不曾起舞的日子，都是对生命的辜负
+                    </h1>
+                    <p class="text-[clamp(1rem,2vw,1.25rem)] mb-10 text-white/90">
+                        学习是一个不断探索的过程，让我们一起开启智慧之门，探索知识的无限可能
+                    </p>
+                    <div class="flex flex-row justify-center gap-4">
+                        <button id="calculator-btn" class="px-8 py-3 bg-white text-primary font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 flex items-center justify-center">
+                            <i class="fa fa-calculator mr-2"></i> 科学计算器
+                        </button>
+                        <button id="grade-analyzer-btn" class="px-8 py-3 bg-transparent border-2 border-white text-white font-medium rounded-lg hover:bg-white/10 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 flex items-center justify-center">
+                            <i class="fa fa-bar-chart mr-2"></i> 成绩分析器
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="w-full h-16 md:h-24">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C0,0,0,0,0,0C31.33,18.58,62.77,41.86,92.83,59.51Z" fill="#F9FAFB"></path>
+                </svg>
+            </div>
+        </section>
+
+        <!-- 学习方法部分 -->
+        <section id="learning-methods" class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">高效学习方法</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">掌握正确的学习方法，能让你的学习效率事半功倍，达到更好的学习效果</p>
+                </div>
+                
+                <!-- 学习方法卡片网格 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 学习方法卡片 1 -->
+                    <div class="method-card bg-white rounded-xl shadow-card p-6 card-hover cursor-pointer" data-id="active-recall">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4">
+                                <i class="fa fa-lightbulb-o text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-dark">主动回忆法</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">通过主动回忆所学内容来强化记忆，比重复阅读更有效。这种方法能帮助你发现自己的知识盲点...</p>
+                        <div class="flex items-center text-primary text-sm">
+                            <span>了解更多</span>
+                            <i class="fa fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- 学习方法卡片 2 -->
+                    <div class="method-card bg-white rounded-xl shadow-card p-6 card-hover cursor-pointer" data-id="spaced-repetition">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mr-4">
+                                <i class="fa fa-calendar-check-o text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-dark">间隔重复法</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">根据遗忘曲线，在适当的时间间隔后复习知识，能够大幅提高记忆效率。这种方法在语言学习和记忆类学科中特别有效...</p>
+                        <div class="flex items-center text-secondary text-sm">
+                            <span>了解更多</span>
+                            <i class="fa fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- 学习方法卡片 3 -->
+                    <div class="method-card bg-white rounded-xl shadow-card p-6 card-hover cursor-pointer" data-id="feynman-technique">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent mr-4">
+                                <i class="fa fa-question-circle text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-dark">费曼技巧</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">通过向他人讲解知识来加深自己的理解，这是一种高效的学习方法。该技巧包括四个步骤：选择概念、教授、回顾和简化...</p>
+                        <div class="flex items-center text-accent text-sm">
+                            <span>了解更多</span>
+                            <i class="fa fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- 学习方法卡片 4 -->
+                    <div class="method-card bg-white rounded-xl shadow-card p-6 card-hover cursor-pointer" data-id="pomodoro-technique">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4">
+                                <i class="fa fa-clock-o text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-dark">番茄工作法</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">将工作时间分为25分钟的专注时段和5分钟的休息时段，有助于提高专注力和效率。这种方法特别适合处理需要高度集中注意力的任务...</p>
+                        <div class="flex items-center text-primary text-sm">
+                            <span>了解更多</span>
+                            <i class="fa fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- 学习方法卡片 5 -->
+                    <div class="method-card bg-white rounded-xl shadow-card p-6 card-hover cursor-pointer" data-id="mind-mapping">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mr-4">
+                                <i class="fa fa-sitemap text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-dark">思维导图</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">通过图形化的方式组织和连接知识点，有助于理解和记忆复杂的信息结构。思维导图可以帮助你梳理思路，提高学习和复习效率...</p>
+                        <div class="flex items-center text-secondary text-sm">
+                            <span>了解更多</span>
+                            <i class="fa fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- 学习方法卡片 6 -->
+                    <div class="method-card bg-white rounded-xl shadow-card p-6 card-hover cursor-pointer" data-id="active-learning">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent mr-4">
+                                <i class="fa fa-cogs text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-dark">主动学习策略</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">主动学习包括提问、总结、讨论和应用等策略，与被动学习相比，能显著提高学习效果和知识保持率。主动学习者更有可能理解和记住所学内容...</p>
+                        <div class="flex items-center text-accent text-sm">
+                            <span>了解更多</span>
+                            <i class="fa fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-10">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center"> <!-- 移除 flex-col 类 -->
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center justify-center md:justify-start">
+                        <i class="fa fa-cube text-primary text-2xl mr-2"></i>
+                        <span class="text-xl font-semibold">Cube Web</span>
+                    </div>
+                        <p class="text-gray-400 mt-2 text-center md:text-left">高效学习，智慧成长</p>
+                </div>
+            
+                <div class="text-center md:text-right">
+                    <p class="text-gray-400">© 2025 Cube Web. 保留所有权利.</p>
+                    <p class="text-gray-400 mt-1">中国-湖北</p>
+                </div>
+            </div>
+        
+            <div class="border-t border-gray-800 mt-8 pt-8 flex justify-between items-center"> <!-- 移除 flex-col 类 -->
+                <div class="mb-4 md:mb-0">
+                    <a href="#" class="text-gray-400 hover:text-white mr-4">隐私政策</a>
+                    <a href="#" class="text-gray-400 hover:text-white">使用条款</a>
+                </div>
+            
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-weixin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-weibo text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 计算器页面 (默认隐藏) -->
+    <div id="calculator-page" class="fixed inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 overflow-y-auto">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-dark">科学计算器</h2>
+                <button id="close-calculator" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <i>X 关闭</i>
+                </button>
+            </div>
+            
+            <div class="max-w-lg mx-auto">
+                <!-- 计算器界面 -->
+                <div class="bg-white rounded-xl shadow-xl overflow-hidden">
+                    <!-- 计算器显示屏 -->
+                    <div class="bg-gray-100 p-4">
+                        <div id="calculator-expression" class="text-right text-gray-500 text-sm h-6 mb-1 overflow-x-auto whitespace-nowrap"></div>
+                        <div id="calculator-result" class="text-right text-3xl font-bold h-10 overflow-x-auto whitespace-nowrap">0</div>
+                    </div>
+                    
+                    <!-- 计算器按键 -->
+                    <div class="grid grid-cols-4 gap-px bg-gray-200">
+                        <!-- 第一行 -->
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-4 text-xl transition-colors" data-value="C">C</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-4 text-xl transition-colors" data-value="CE">CE</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-4 text-xl transition-colors" data-value="%">%</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-4 text-xl transition-colors" data-value="/">÷</button>
+                        
+                        <!-- 第二行 -->
+                        <button class="calc-btn bg-white hover:bg-gray-100 text-gray-800 py-4 text-xl transition-colors" data-value="7">7</button>
+                        <button class="calc-btn bg-white hover:bg-gray-100 text-gray-800 py-4 text-xl transition-colors" data-value="8">8</button>
+                        <button class="calc-btn bg-white hover:bg-gray-100 text-gray-800 py-4 text-xl transition-colors" data-value="9">9</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-4 text-xl transition-colors" data-value="*">×</button>
+                        
+                        <!-- 第三行 -->
+                        <button class="calc-btn bg-white hover:bg-gray-100 text-gray-800 py-4 text-xl transition-colors" data-value="4">4</button>
+                        <button class="calc-btn bg-white hover:bg-gray-100 text-gray-800 py-4 text-xl transition-colors" data-value="5">5</button>
+                        <button class="calc-btn bg-white hover:bg-gray-100 text-gray-800 py-4 text-xl transition-colors" data-value="6">6</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-4 text-xl transition-colors" data-value="-">-</button>
+                        
+                        <!-- 第四行 -->
+                        <button class="calc-btn bg-white hover:bg-gray-100 text-gray-800 py-4 text-xl transition-colors" data-value="1">1</button>
+                        <button class="calc-btn bg-white hover:bg-gray-100 text-gray-800 py-4 text-xl transition-colors" data-value="2">2</button>
+                        <button class="calc-btn bg-white hover:bg-gray-100 text-gray-800 py-4 text-xl transition-colors" data-value="3">3</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-4 text-xl transition-colors" data-value="+">+</button>
+                        
+                        <!-- 第五行 -->
+                        <button class="calc-btn bg-white hover:bg-gray-100 text-gray-800 py-4 text-xl transition-colors" data-value="0">0</button>
+                        <button class="calc-btn bg-white hover:bg-gray-100 text-gray-800 py-4 text-xl transition-colors" data-value=".">.</button>
+                        <button class="calc-btn bg-primary hover:bg-primary/90 text-white py-4 text-xl transition-colors col-span-2" data-value="=">=</button>
+                    </div>
+                    
+                    <!-- 科学功能按键 -->
+                    <div class="grid grid-cols-5 gap-px bg-gray-200">
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="sin">sin</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="cos">cos</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="tan">tan</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="log">log</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="ln">ln</button>
+                        
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="sqrt">√</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="^">^</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="PI">π</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="e">e</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="(">(</button>
+                        
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value=")">)</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="1/x">1/x</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="!">!</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="Ans">Ans</button>
+                        <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-sm transition-colors" data-value="DEL">DEL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 成绩分析器页面 (默认隐藏) -->
+    <div id="grade-analyzer-page" class="fixed inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 overflow-y-auto">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-dark">成绩分析器</h2>
+                <button id="close-grade-analyzer" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <i>X 关闭</i>
+                </button>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <!-- 学科卡片区域 -->
+                <div class="mb-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-semibold text-dark">添加学科成绩</h3>
+                        <div class="flex gap-2">
+                            <button id="add-subject-btn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors flex items-center">
+                                <i class="fa fa-plus mr-2"></i> 添加学科
+                            </button>
+                            <button id="remove-subject-btn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center" disabled>
+                                <i class="fa fa-minus mr-2"></i> 删除学科
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 学科卡片容器 -->
+                    <div id="subjects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- 学科卡片 1 -->
+                        <div class="subject-card bg-white rounded-xl shadow-card p-6 border-2 border-primary/20">
+                            <div class="flex justify-between items-center mb-4">
+                                <h4 class="font-semibold text-dark">学科 1</h4>
+                                <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                    <i class="fa fa-book"></i>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">科目名称</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors subject-name" placeholder="输入科目名称">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">总分</label>
+                                    <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors subject-total" placeholder="输入总分">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">得分</label>
+                                    <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors subject-score" placeholder="输入得分">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 学科卡片 2 -->
+                        <div class="subject-card bg-white rounded-xl shadow-card p-6 border-2 border-primary/20">
+                            <div class="flex justify-between items-center mb-4">
+                                <h4 class="font-semibold text-dark">学科 2</h4>
+                                <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                    <i class="fa fa-book"></i>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">科目名称</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors subject-name" placeholder="输入科目名称">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">总分</label>
+                                    <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors subject-total" placeholder="输入总分">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">得分</label>
+                                    <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors subject-score" placeholder="输入得分">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 学科卡片 3 -->
+                        <div class="subject-card bg-white rounded-xl shadow-card p-6 border-2 border-primary/20">
+                            <div class="flex justify-between items-center mb-4">
+                                <h4 class="font-semibold text-dark">学科 3</h4>
+                                <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                    <i class="fa fa-book"></i>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">科目名称</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors subject-name" placeholder="输入科目名称">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">总分</label>
+                                    <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors subject-total" placeholder="输入总分">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">得分</label>
+                                    <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors subject-score" placeholder="输入得分">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 分析按钮 -->
+                <div class="text-center mb-10">
+                    <button id="analyze-btn" class="px-8 py-3 bg-primary text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        <i class="fa fa-line-chart mr-2"></i> 分析成绩
+                    </button>
+                </div>
+                
+                <!-- 分析结果区域 (默认隐藏) -->
+                <div id="analysis-results" class="bg-white rounded-xl shadow-card p-6 md:p-8 hidden">
+                    <h3 class="text-xl font-semibold text-dark mb-6">成绩分析结果</h3>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- 雷达图 -->
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="text-lg font-medium text-dark mb-4">成绩分布雷达图</h4>
+                            <div class="w-full h-80">
+                                <canvas id="radar-chart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- 成绩详情 -->
+                        <div>
+                            <h4 class="text-lg font-medium text-dark mb-4">成绩详情</h4>
+                            <div id="grades-detail" class="space-y-4">
+                                <!-- 成绩详情将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 总分百分比激励卡片 -->
+                    <div class="mt-8">
+                        <div id="motivation-card" class="bg-gray-50 rounded-lg p-4">
+                            <!-- 激励内容将通过JavaScript动态生成 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 学习方法详情页面 (默认隐藏) -->
+    <div id="method-detail-page" class="fixed inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 overflow-y-auto">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex justify-between items-center mb-8">
+                <h2 id="method-detail-title" class="text-2xl font-bold text-dark">学习方法详情</h2>
+                <button id="close-method-detail" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <i class="fa fa-times text-xl">X 关闭</i>
+                </button>
+            </div>
+            
+            <div id="method-detail-content" class="prose max-w-none text-gray-700">
+                <!-- 内容将通过JavaScript动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 学习方法详情数据 -->
+    <script>
+        const learningMethods = {
+            "active-recall": {
+                title: "主动回忆法",
+                content: `
+                    <p>主动回忆法是一种强大的学习策略，它通过主动从记忆中检索信息来强化记忆和理解。与被动阅读或听讲不同，主动回忆要求你积极思考所学内容，这有助于将信息从短期记忆转化为长期记忆。</p>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">如何应用主动回忆法</h3>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>阅读或学习完一部分内容后，尝试不看材料，尽可能多地回忆所学信息。</li>
+                        <li>使用闪卡、自问自答或向他人讲解等方式来测试自己的记忆。</li>
+                        <li>对照学习材料，检查自己回忆中的错误和遗漏，强化正确的记忆。</li>
+                        <li>定期重复这个过程，间隔时间逐渐延长，以加强长期记忆。</li>
+                    </ol>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">主动回忆法的优点</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>提高信息保留率：研究表明，主动回忆能显著提高长期记忆效果。</li>
+                        <li>识别知识盲点：通过尝试回忆，你能清楚地知道自己哪些地方还没有掌握。</li>
+                        <li>加深理解：主动思考内容之间的联系和含义，有助于更深层次的理解。</li>
+                        <li>提高考试表现：主动回忆训练能让你在考试时更轻松地检索信息。</li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">实用技巧</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>创建自己的问题库，涵盖关键概念和知识点。</li>
+                        <li>使用数字闪卡工具如Anki，它能根据你的记忆情况智能安排复习时间。</li>
+                        <li>在学习过程中定期暂停，进行短暂的回忆练习。</li>
+                        <li>结合其他学习方法，如间隔重复和费曼技巧，效果更佳。</li>
+                    </ul>
+                `
+            },
+            "spaced-repetition": {
+                title: "间隔重复法",
+                content: `
+                    <p>间隔重复法是一种基于遗忘曲线的高效学习策略，它通过在适当的时间间隔后复习知识，来最大限度地提高记忆效率。这种方法在语言学习、记忆类学科和任何需要长期记忆的内容中特别有效。</p>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">遗忘曲线原理</h3>
+                    <p>德国心理学家赫尔曼·艾宾浩斯的研究表明，人类记忆的遗忘速度不是均匀的，而是最初很快，然后逐渐减慢。间隔重复法利用这一原理，在你即将忘记某个信息之前进行复习，从而强化记忆。</p>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">如何应用间隔重复法</h3>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>将需要学习的内容分解成小的知识点或问题。</li>
+                        <li>首次学习后，在短时间内（如1天后）进行第一次复习。</li>
+                        <li>如果复习成功，下次复习时间间隔延长（如1周后）；如果失败，则缩短间隔（如1天后再次复习）。</li>
+                        <li>随着记忆的巩固，复习间隔逐渐延长（如1个月、3个月等）。</li>
+                    </ol>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">间隔重复工具</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Anki：一款流行的开源间隔重复软件，支持多种类型的闪卡。</li>
+                        <li>Quizlet：提供闪卡和学习游戏，也支持间隔重复功能。</li>
+                        <li>Memrise：专注于语言学习的间隔重复平台。</li>
+                        <li>SuperMemo：最早的间隔重复软件之一，具有强大的算法和功能。</li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">实用建议</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>保持一致性：每天定期复习，形成习惯。</li>
+                        <li>不要贪多：一次学习适量的内容，避免负担过重。</li>
+                        <li>定期回顾：即使某个知识点已经掌握，也要定期回顾以确保长期记忆。</li>
+                        <li>结合主动回忆：在复习时，尝试主动回忆信息，而不是简单地阅读。</li>
+                    </ul>
+                `
+            },
+            "feynman-technique": {
+                title: "费曼技巧",
+                content: `
+                    <p>费曼技巧是由诺贝尔奖得主理查德·费曼发明的一种学习方法，它通过向他人讲解知识来加深自己的理解。这种方法不仅能帮助你发现自己的知识漏洞，还能让你真正掌握所学内容。</p>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">费曼技巧的四个步骤</h3>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li><strong>选择概念</strong>：选择一个你想要学习的概念或知识点。</li>
+                        <li><strong>教授它</strong>：想象你正在向一个初学者讲解这个概念，用简单易懂的语言写下或说出你的解释。</li>
+                        <li><strong>回顾和反思</strong>：检查你在讲解过程中遇到的困难或模糊的地方，这些就是你的知识漏洞。回到原始材料，重新学习这些部分。</li>
+                        <li><strong>简化和比喻</strong>：用简单的语言和比喻来进一步简化你的解释，确保你真正理解了这个概念。</li>
+                    </ol>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">为什么费曼技巧有效</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>暴露知识盲点：当你尝试讲解一个概念时，你会发现自己哪些地方还没有完全理解。</li>
+                        <li>加深理解：为了向他人解释，你需要更深入地思考和理解这个概念。</li>
+                        <li>强化记忆：主动回忆和组织信息的过程有助于将知识固化在记忆中。</li>
+                        <li>提高表达能力：练习用简单的语言解释复杂的概念，能提高你的沟通能力。</li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">实用建议</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>使用真实的听众：如果可能，向朋友或家人讲解这个概念，这比自己想象更有效。</li>
+                        <li>写下来：将你的解释写下来，这能帮助你更清晰地组织思路。</li>
+                        <li>使用比喻：将复杂的概念与日常生活中的事物进行类比，能帮助你更好地理解和记忆。</li>
+                        <li>定期复习：随着时间的推移，定期回顾和应用费曼技巧，以巩固你的知识。</li>
+                    </ul>
+                `
+            },
+            "pomodoro-technique": {
+                title: "番茄工作法",
+                content: `
+                    <p>番茄工作法是由弗朗西斯科·西里洛于1980年代开发的一种时间管理方法，它通过将工作时间划分为固定的间隔（通常为25分钟），并在每个间隔后进行短暂休息，来提高专注力和工作效率。</p>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">番茄工作法的基本步骤</h3>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>选择一个任务：确定你想要在一个番茄时间内完成的具体任务。</li>
+                        <li>设置计时器：将计时器设置为25分钟（一个番茄时间）。</li>
+                        <li>专注工作：在计时器响起之前，专注于任务，避免分心。</li>
+                        <li>短暂休息：完成一个番茄时间后，进行5分钟的休息。</li>
+                        <li>重复：每完成4个番茄时间，进行一次较长的休息（通常为15-30分钟）。</li>
+                    </ol>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">番茄工作法的优点</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>提高专注力：25分钟的短时间间隔有助于保持高度集中的注意力。</li>
+                        <li>减少拖延：将工作分解为小的时间块，使任务看起来更易于管理。</li>
+                        <li>改善时间感知：通过跟踪番茄时间，你能更好地估计完成任务所需的时间。</li>
+                        <li>预防疲劳：定期的休息能帮助你保持精力充沛，避免长时间工作导致的疲劳。</li>
+                        <li>增强成就感：完成每个番茄时间都会给你带来成就感，激励你继续前进。</li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">实用技巧</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>使用实体或数字番茄钟：有许多专门设计的番茄钟应用程序和实体设备可供选择。</li>
+                        <li>保持一致性：尽量每天在相同的时间使用番茄工作法，形成习惯。</li>
+                        <li>灵活调整：根据任务的性质和你的个人偏好，调整番茄时间的长度（例如，有些人喜欢30分钟的间隔）。</li>
+                        <li>记录和分析：记录你完成的番茄时间数量和类型，分析你的工作模式和效率。</li>
+                        <li>避免中断：在番茄时间内，尽量避免任何中断，包括查看手机或回复消息。</li>
+                    </ul>
+                `
+            },
+            "mind-mapping": {
+                title: "思维导图",
+                content: `
+                    <p>思维导图是一种图形化的思维工具，它通过中心主题和分支结构来组织和连接知识点，帮助你更好地理解、记忆和创造。思维导图可以应用于学习、记笔记、解决问题、项目规划等多个领域。</p>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">如何创建思维导图</h3>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>确定中心主题：在纸张或数字工具的中心写下或绘制你的主要主题。</li>
+                        <li>添加主要分支：从中心主题延伸出主要分支，每个分支代表一个与主题相关的主要概念。</li>
+                        <li>添加子分支：从每个主要分支延伸出子分支，详细说明各个概念的细节。</li>
+                        <li>使用关键词和图像：在每个分支上使用简短的关键词或图像来概括要点，避免冗长的句子。</li>
+                        <li>建立连接：使用线条或箭头连接不同的分支，显示它们之间的关系。</li>
+                        <li>使用颜色和符号：使用不同的颜色和符号来区分不同的主题和重要性，增强视觉效果。</li>
+                    </ol>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">思维导图的优点</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>提高记忆力：图形化的结构和视觉元素能帮助你更好地记忆信息。</li>
+                        <li>增强理解：通过展示概念之间的关系，思维导图能帮助你更深入地理解复杂的主题。</li>
+                        <li>激发创造力：思维导图的非线性结构鼓励自由联想，有助于产生新的想法和解决方案。</li>
+                        <li>提高组织能力：思维导图能帮助你整理和组织大量信息，使其更有条理。</li>
+                        <li>节省时间：相比传统的线性笔记，思维导图通常能更快地记录和回顾信息。</li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">思维导图工具</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>XMind：一款功能强大的思维导图软件，支持多种导出格式。</li>
+                        <li>FreeMind：免费的开源思维导图工具，简单易用。</li>
+                        <li>MindMeister：在线思维导图工具，支持团队协作。</li>
+                        <li>Lucidchart：不仅支持思维导图，还能创建流程图、组织结构图等。</li>
+                        <li>手绘：使用纸张和笔创建思维导图，简单直接，适合快速记录。</li>
+                    </ul>
+                `
+            },
+            "active-learning": {
+                title: "主动学习策略",
+                content: `
+                    <p>主动学习是一种以学生为中心的学习方法，它强调学生的主动参与和互动，而不是被动地接受知识。主动学习包括提问、讨论、应用、解决问题等活动，这些活动能帮助学生更深入地理解和记忆知识，并提高批判性思维和解决问题的能力。</p>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">主动学习的常见策略</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>问题导向学习</strong>：通过解决实际问题来学习知识和技能。</li>
+                        <li><strong>小组讨论</strong>：与同学或同事讨论问题，分享观点和见解。</li>
+                        <li><strong>案例分析</strong>：分析真实或虚构的案例，应用所学知识解决问题。</li>
+                        <li><strong>角色扮演</strong>：通过模拟真实场景来练习和应用技能。</li>
+                        <li><strong>项目式学习</strong>：通过完成项目来学习和应用知识。</li>
+                        <li><strong>反思性写作</strong>：写下对所学内容的思考和反思，加深理解。</li>
+                        <li><strong>教学他人</strong>：通过向他人讲解知识来巩固自己的理解。</li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">主动学习的优点</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>提高学习效果：主动学习能显著提高知识的理解和保留率。</li>
+                        <li>培养批判性思维：主动学习鼓励学生质疑、分析和评估信息。</li>
+                        <li>增强参与感：主动参与学习过程能提高学生的兴趣和动力。</li>
+                        <li>提高沟通和协作能力：许多主动学习策略需要与他人合作，有助于发展这些技能。</li>
+                        <li>促进知识应用：主动学习强调将知识应用于实际情境，培养解决问题的能力。</li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-semibold mt-4 mb-2">如何在自学中应用主动学习</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>提出问题：在学习过程中，不断问自己"为什么？"、"如何应用？"等问题。</li>
+                        <li>创建总结：用自己的话总结所学内容，而不是简单地复制。</li>
+                        <li>寻找应用机会：尝试将所学知识应用到实际问题或案例中。</li>
+                        <li>参与讨论：加入学习小组或在线论坛，与他人讨论和分享观点。</li>
+                        <li>教授他人：向朋友、家人或虚拟听众讲解你所学的内容。</li>
+                        <li>使用主动学习工具：如Anki、Quizlet等工具，帮助你进行主动回忆和测试。</li>
+                    </ul>
+                `
+            }
+        };
+
+        // 页面交互逻辑
+        document.addEventListener('DOMContentLoaded', function() {
+            // 导航栏滚动效果
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 10) {
+                    navbar.classList.add('shadow-md');
+                    navbar.classList.remove('shadow-sm');
+                } else {
+                    navbar.classList.remove('shadow-md');
+                    navbar.classList.add('shadow-sm');
+                }
+            });
+            
+            // 移动端菜单切换
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // 计算器页面切换
+            const calculatorBtn = document.getElementById('calculator-btn');
+            const calculatorPage = document.getElementById('calculator-page');
+            const closeCalculator = document.getElementById('close-calculator');
+            
+            calculatorBtn.addEventListener('click', function() {
+                calculatorPage.classList.remove('translate-x-full');
+                calculatorPage.classList.add('translate-x-0');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            closeCalculator.addEventListener('click', function() {
+                calculatorPage.classList.remove('translate-x-0');
+                calculatorPage.classList.add('translate-x-full');
+                document.body.style.overflow = '';
+            });
+            
+            // 成绩分析器页面切换
+            const gradeAnalyzerBtn = document.getElementById('grade-analyzer-btn');
+            const gradeAnalyzerPage = document.getElementById('grade-analyzer-page');
+            const closeGradeAnalyzer = document.getElementById('close-grade-analyzer');
+            
+            gradeAnalyzerBtn.addEventListener('click', function() {
+                gradeAnalyzerPage.classList.remove('translate-x-full');
+                gradeAnalyzerPage.classList.add('translate-x-0');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            closeGradeAnalyzer.addEventListener('click', function() {
+                gradeAnalyzerPage.classList.remove('translate-x-0');
+                gradeAnalyzerPage.classList.add('translate-x-full');
+                document.body.style.overflow = '';
+                document.getElementById('analysis-results').classList.add('hidden');
+            });
+            
+            // 学习方法详情页面切换
+            const methodCards = document.querySelectorAll('.method-card');
+            const methodDetailPage = document.getElementById('method-detail-page');
+            const closeMethodDetail = document.getElementById('close-method-detail');
+            const methodDetailTitle = document.getElementById('method-detail-title');
+            const methodDetailContent = document.getElementById('method-detail-content');
+            
+            methodCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const methodId = this.getAttribute('data-id');
+                    const method = learningMethods[methodId];
+                    
+                    if (method) {
+                        methodDetailTitle.textContent = method.title;
+                        methodDetailContent.innerHTML = method.content;
+                        
+                        methodDetailPage.classList.remove('translate-x-full');
+                        methodDetailPage.classList.add('translate-x-0');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+            
+            closeMethodDetail.addEventListener('click', function() {
+                methodDetailPage.classList.remove('translate-x-0');
+                methodDetailPage.classList.add('translate-x-full');
+                document.body.style.overflow = '';
+            });
+            
+            // 计算器功能实现
+            const calculatorExpression = document.getElementById('calculator-expression');
+            const calculatorResult = document.getElementById('calculator-result');
+            const calcButtons = document.querySelectorAll('.calc-btn');
+            
+            let currentExpression = '';
+            let lastResult = '';
+            
+            calcButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    
+                    switch(value) {
+                        case '=':
+                            try {
+                                // 处理特殊函数
+                                let expression = currentExpression;
+                                expression = expression.replace(/sin\(/g, 'Math.sin(');
+                                expression = expression.replace(/cos\(/g, 'Math.cos(');
+                                expression = expression.replace(/tan\(/g, 'Math.tan(');
+                                expression = expression.replace(/log\(/g, 'Math.log10(');
+                                expression = expression.replace(/ln\(/g, 'Math.log(');
+                                expression = expression.replace(/sqrt\(/g, 'Math.sqrt(');
+                                expression = expression.replace(/PI/g, 'Math.PI');
+                                expression = expression.replace(/e/g, 'Math.E');
+                                expression = expression.replace(/Ans/g, lastResult);
+                                
+                                // 处理阶乘
+                                expression = expression.replace(/(\d+)!/g, function(match, num) {
+                                    return factorial(parseInt(num));
+                                });
+                                
+                                // 计算结果
+                                const result = eval(expression);
+                                calculatorResult.textContent = formatNumber(result);
+                                lastResult = result;
+                                currentExpression = '';
+                            } catch (error) {
+                                calculatorResult.textContent = '错误';
+                            }
+                            break;
+                        case 'C':
+                            currentExpression = '';
+                            calculatorResult.textContent = '0';
+                            break;
+                        case 'CE':
+                            currentExpression = currentExpression.slice(0, -1);
+                            if (currentExpression === '') {
+                                calculatorResult.textContent = '0';
+                            } else {
+                                calculatorResult.textContent = currentExpression;
+                            }
+                            break;
+                        case 'DEL':
+                            currentExpression = currentExpression.slice(0, -1);
+                            if (currentExpression === '') {
+                                calculatorResult.textContent = '0';
+                            } else {
+                                calculatorResult.textContent = currentExpression;
+                            }
+                            break;
+                        default:
+                            if (calculatorResult.textContent === '0' || calculatorResult.textContent === '错误') {
+                                currentExpression = value;
+                            } else {
+                                currentExpression += value;
+                            }
+                            calculatorResult.textContent = currentExpression;
+                            break;
+                    }
+                });
+            });
+            
+            // 阶乘函数
+            function factorial(num) {
+                if (num === 0 || num === 1) return 1;
+                for (let i = num - 1; i > 1; i--) {
+                    num *= i;
+                }
+                return num;
+            }
+            
+            // 格式化数字显示
+            function formatNumber(num) {
+                if (num.toString().length > 10) {
+                    return num.toExponential(6);
+                }
+                return num.toString();
+            }
+            
+            // 成绩分析器功能
+            const addSubjectBtn = document.getElementById('add-subject-btn');
+            const removeSubjectBtn = document.getElementById('remove-subject-btn');
+            const subjectsContainer = document.getElementById('subjects-container');
+            const analyzeBtn = document.getElementById('analyze-btn');
+            const analysisResults = document.getElementById('analysis-results');
+            const radarChart = document.getElementById('radar-chart');
+            const gradesDetail = document.getElementById('grades-detail');
+            const motivationCard = document.getElementById('motivation-card');
+            
+            let subjectCount = 3; // 初始有3个学科卡片
+            
+            // 添加学科卡片
+            addSubjectBtn.addEventListener('click', function() {
+                if (subjectCount < 10) { // 最多10个学科
+                    subjectCount++;
+                    
+                    const newSubjectCard = document.createElement('div');
+                    newSubjectCard.className = 'subject-card bg-white rounded-xl shadow-card p-6 border-2 border-primary/20';
+                    newSubjectCard.innerHTML = `
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="font-semibold text-dark">学科 ${subjectCount}</h4>
+                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                <i class="fa fa-book"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">科目名称</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors subject-name" placeholder="输入科目名称">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">总分</label>
+                                <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors subject-total" placeholder="输入总分">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">得分</label>
+                                <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors subject-score" placeholder="输入得分">
+                            </div>
+                        </div>
+                    `;
+                    
+                    subjectsContainer.appendChild(newSubjectCard);
+                    updateSubjectButtons();
+                    updateAnalyzeButton();
+                }
+            });
+            
+            // 删除学科卡片
+            removeSubjectBtn.addEventListener('click', function() {
+                if (subjectCount > 3) { // 至少保留3个学科
+                    const cards = document.querySelectorAll('.subject-card');
+                    subjectsContainer.removeChild(cards[cards.length - 1]);
+                    subjectCount--;
+                    updateSubjectButtons();
+                    updateAnalyzeButton();
+                }
+            });
+            
+            // 更新添加/删除学科按钮状态
+            function updateSubjectButtons() {
+                if (subjectCount >= 10) {
+                    addSubjectBtn.disabled = true;
+                    addSubjectBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    addSubjectBtn.disabled = false;
+                    addSubjectBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                
+                if (subjectCount <= 3) {
+                    removeSubjectBtn.disabled = true;
+                    removeSubjectBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    removeSubjectBtn.disabled = false;
+                    removeSubjectBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }
+            
+            // 监听学科输入变化，更新分析按钮状态
+            subjectsContainer.addEventListener('input', updateAnalyzeButton);
+            
+            // 更新分析按钮状态
+            function updateAnalyzeButton() {
+                const subjectInputs = document.querySelectorAll('.subject-name, .subject-total, .subject-score');
+                let hasEmpty = false;
+                
+                subjectInputs.forEach(input => {
+                    if (input.value.trim() === '') {
+                        hasEmpty = true;
+                    }
+                });
+                
+                if (hasEmpty) {
+                    analyzeBtn.disabled = true;
+                    analyzeBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    analyzeBtn.disabled = false;
+                    analyzeBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }
+
+            // 分析成绩
+            analyzeBtn.addEventListener('click', function() {
+                const subjectCards = document.querySelectorAll('.subject-card');
+                let subjects = [];
+                let totalScore = 0;
+                let totalMaxScore = 0;
+                
+                subjectCards.forEach(card => {
+                    const name = card.querySelector('.subject-name').value || '未命名科目';
+                    const score = parseFloat(card.querySelector('.subject-score').value) || 0;
+                    const total = parseFloat(card.querySelector('.subject-total').value) || 0;
+                    
+                    if (score && total) {
+                        subjects.push({
+                            name,
+                            score,
+                            total,
+                            percentage: (score / total) * 100
+                        });
+                        
+                        totalScore += score;
+                        totalMaxScore += total;
+                    }
+                });
+                
+                // 计算总分百分比
+                const overallPercentage = (totalScore / totalMaxScore) * 100;
+                
+                // 显示分析结果
+                analysisResults.classList.remove('hidden');
+                
+                // 绘制雷达图
+                if (window.radarChartInstance) {
+                    window.radarChartInstance.destroy();
+                }
+                
+                const labels = subjects.map(subject => subject.name);
+                const data = subjects.map(subject => subject.percentage);
+                
+                window.radarChartInstance = new Chart(radarChart, {
+                    type: 'radar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '得分百分比',
+                            data: data,
+                            backgroundColor: 'rgba(22, 93, 255, 0.2)',
+                            borderColor: 'rgba(22, 93, 255, 1)',
+                            borderWidth: 2,
+                            pointBackgroundColor: 'rgba(22, 93, 255, 1)',
+                            pointRadius: 4,
+                            pointHoverRadius: 6
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    display: false // 删除雷达图上的数字
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+                
+                // 生成成绩详情
+                gradesDetail.innerHTML = '';
+                
+                // 添加总分卡片
+                const totalCard = document.createElement('div');
+                totalCard.className = 'bg-white rounded-lg shadow p-4 border-l-4 border-primary';
+                totalCard.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h5 class="font-medium text-gray-500">总分</h5>
+                            <p class="text-2xl font-bold text-dark">${totalScore.toFixed(1)} / ${totalMaxScore.toFixed(1)}</p>
+                        </div>
+                        <div class="text-right">
+                            <h5 class="font-medium text-gray-500">百分比</h5>
+                            <p class="text-2xl font-bold text-primary">${overallPercentage.toFixed(1)}%</p>
+                        </div>
+                    </div>
+                `;
+                gradesDetail.appendChild(totalCard);
+                
+                // 添加各科学分卡片
+                subjects.forEach(subject => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-lg shadow p-4';
+                    
+                    // 根据百分比设置颜色
+                    let progressColor = 'bg-gray-200';
+                    if (subject.percentage >= 90) progressColor = 'bg-green-500';
+                    else if (subject.percentage >= 80) progressColor = 'bg-blue-500';
+                    else if (subject.percentage >= 60) progressColor = 'bg-yellow-500';
+                    else progressColor = 'bg-red-500';
+                    
+                    card.innerHTML = `
+                        <div class="flex justify-between items-center mb-2">
+                            <h5 class="font-medium text-dark">${subject.name}</h5>
+                            <span class="text-sm font-medium ${progressColor === 'bg-green-500' || progressColor === 'bg-blue-500' ? 'text-green-600' : progressColor === 'bg-yellow-500' ? 'text-yellow-600' : 'text-red-600'}">${subject.score.toFixed(1)} / ${subject.total.toFixed(1)}</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="${progressColor} h-2.5 rounded-full" style="width: ${subject.percentage}%"></div>
+                        </div>
+                        <div class="mt-2 text-right">
+                            <span class="text-sm text-gray-500">${subject.percentage.toFixed(1)}%</span>
+                        </div>
+                    `;
+                    gradesDetail.appendChild(card);
+                });
+                
+                // 生成总分百分比激励卡片
+                let motivationMessage = '';
+                let motivationClass = '';
+                
+                if (overallPercentage >= 90) {
+                    motivationMessage = '太棒了！你的成绩非常优秀，继续保持！你的努力和专注已经得到了很好的回报，继续朝着目标前进，你一定能取得更大的成功！';
+                    motivationClass = 'bg-green-50 border-green-500';
+                } else if (overallPercentage >= 80) {
+                    motivationMessage = '做得很好！你的成绩很出色，继续加油！你已经掌握了大部分知识，再稍微努力一下，就能达到更高的水平！';
+                    motivationClass = 'bg-blue-50 border-blue-500';
+                } else if (overallPercentage >= 60) {
+                    motivationMessage = '表现不错！你的成绩达到了合格水平，继续努力！你已经有了良好的基础，只要再花些时间和精力，一定能取得进步！';
+                    motivationClass = 'bg-yellow-50 border-yellow-500';
+                } else {
+                    motivationMessage = '不要灰心！每个人都有进步的空间，只要你坚持不懈，一定能取得更好的成绩！分析自己的薄弱环节，制定学习计划，一步一个脚印地提高！';
+                    motivationClass = 'bg-red-50 border-red-500';
+                }
+                
+                motivationCard.className = `rounded-lg p-4 border-l-4 ${motivationClass}`;
+                motivationCard.innerHTML = `
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fa fa-lightbulb-o text-2xl ${motivationClass === 'bg-green-50 border-green-500' ? 'text-green-500' : motivationClass === 'bg-blue-50 border-blue-500' ? 'text-blue-500' : motivationClass === 'bg-yellow-50 border-yellow-500' ? 'text-yellow-500' : 'text-red-500'}"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium ${motivationClass === 'bg-green-50 border-green-500' ? 'text-green-800' : motivationClass === 'bg-blue-50 border-blue-500' ? 'text-blue-800' : motivationClass === 'bg-yellow-50 border-yellow-500' ? 'text-yellow-800' : 'text-red-800'}">总体情况</h3>
+                            <div class="mt-2 text-sm ${motivationClass === 'bg-green-50 border-green-500' ? 'text-green-700' : motivationClass === 'bg-blue-50 border-blue-500' ? 'text-blue-700' : motivationClass === 'bg-yellow-50 border-yellow-500' ? 'text-yellow-700' : 'text-red-700'}">
+                                <p>${motivationMessage}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // 滚动到结果区域
+                analysisResults.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
